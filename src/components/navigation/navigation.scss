@@ -1,0 +1,15 @@
+.navigation {
+    width: 100%;
+    max-width: 100%;
+    height: 60px;
+    background-color: rgb(65, 4, 136);
+    color: #fff;
+    .navigationTitle {
+        position: absolute;
+        left: 10%;
+        font-weight: 900;
+
+     line-height: 60px;
+
+    }
+}

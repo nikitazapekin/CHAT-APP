@@ -1,0 +1,40 @@
+.loginBox {
+    width: 100%;
+    max-width: 80%;
+    height: 500px;
+    background-color: rgb(65, 4, 136);
+    top: 100px;
+    position: relative;
+   margin: 0 auto;
+text-align: center;
+color: #fff;
+display: flex;
+flex-direction: column;
+padding: 50px;
+border-radius: 20px;
+gap: 50px;
+.typeTitle, .typeEmail, .typePassword  {
+    height: 60px;
+    padding-left: 20px;
+
+}
+.orLogin {
+    cursor: pointer;
+    font-size: 23px;
+}
+}
+    .submitRegister {
+    //    height: 90px;
+        cursor: pointer;
+        border-radius: 20px;
+        background-color:rgba(92, 6, 184);
+        color: #fff;
+        border: none; 
+        height: 120px;
+        outline: none;
+        font-size: 25px;
+    }
+
+    .typeEmail {
+        height: 200px;
+    }

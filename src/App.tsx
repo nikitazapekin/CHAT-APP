@@ -21,6 +21,8 @@ import {userSlice} from "./store/reducers/UserSlice.ts";
 import {useDispatch} from "react-redux";
 import {useAppDispatch, useAppSelector} from "./hooks/redux.ts";
 import {fetchUsers} from "./store/reducers/ActionCreators.ts";
+import RegisterPage from './pages/registerPage/registerPage.tsx';
+import AppRoutes from './utils/routes.tsx';
 
 //import PostContainer from "./components/PostContainer.tsx";
 //import PostContainer2 from "./components/PostContainer2";
@@ -37,22 +39,13 @@ function App() {
  //   fetchUsers()
 dispatch(fetchUsers());
   }, [])
-/* const dispatch = useAppDispatch()
-    const {users, isLoading, error} = useAppSelector(state => state.userReducer)
-   
-     useEffect(() => {
-         dispatch(fetchUsers())
-     }, [ ])
- */
+ 
     return (
-    <div className="App">
-        {/*{isLoading && <h1>Идет загрузка...</h1>}*/}
-        {/*{error && <h1>{error}</h1>}*/}
-        {/*{JSON.stringify(users, null, 2)}*/}
-        <div style={{display: 'flex'}}>
-          ыыыыыыыыыыыыыыы
-        </div>
-    </div>
+  
+       
+     
+      <AppRoutes isAuthenticated={false} />
+
   );
 }
 
