@@ -15,6 +15,7 @@ router.post(
   ],
   async (req, res) => {
   try {
+    console.log("MY SQLLLLLLLLLLLLL")
     console.log("Body", req.body)
     const errors = validationResult(req) // проверока на существование почты и длину пароля
 
@@ -37,9 +38,26 @@ router.post(
     }
 
     const hashedPassword = await bcrypt.hash(password, 12)
-    const user = new User({name, email, password: hashedPassword })
-console.log("USEEEEET" +user)
-    await user.save()
+    //const user = new User({name, email, password: hashedPassword })
+//console.log("USEEEEET" +user)
+   // await user.save()
+   const sql = "INSERT INTO users (`name`, `email`, `password`) VALUES (?)";
+   const values = [
+       req.body.name,
+       req.body.email,
+       req.body.password
+   ];
+   console.log("VAL"+values)
+   db.query(sql, [values], (err, data)=> {
+       if(err){
+           return res.json('error')
+       }
+       return res.json(data)
+   })
+//})
+
+
+
 
     res.status(201).json({ message: 'Пользователь создан' })
 

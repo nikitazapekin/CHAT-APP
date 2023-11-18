@@ -1,9 +1,10 @@
 
 import React from "react"
 import {Route, Routes, Navigate}  from "react-router-dom"
-import { SIGN_UP_ROUTE, SIGN_IN_ROUTE } from "./consts.ts"
+import { SIGN_UP_ROUTE, SIGN_IN_ROUTE, ACCOUNT_ROUTE } from "./consts.ts"
  import RegisterPage from "../pages/registerPage/registerPage.tsx"
  import LoginPage from "../pages/loginPage/loginPage.tsx"
+ import AccountPage from "../pages/accountPage/accoundPage.tsx"
 const publicRoutes=[
  {
     path: SIGN_UP_ROUTE,
@@ -13,7 +14,10 @@ const publicRoutes=[
     path: SIGN_IN_ROUTE,
     Component: LoginPage
  }, 
- 
+ {
+    path: ACCOUNT_ROUTE,
+    Component: AccountPage
+ }, 
 ]
 const privateRoutes =[
     {
@@ -24,6 +28,10 @@ const privateRoutes =[
         path:  SIGN_UP_ROUTE,
         Component:RegisterPage
      },
+     {
+        path: ACCOUNT_ROUTE,
+        Component: AccountPage
+     }, 
   
 ]
 interface AppRoutesProps {

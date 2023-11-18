@@ -1,0 +1,86 @@
+.panel {
+    width:  500px;
+   background-color: rgb(59, 4, 121);
+    min-height: 100vh;
+  //  background-color: red;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    .btnsPanel {
+        display:  flex;
+        gap: 50px;
+        margin-top: 70px;
+        justify-content: center;
+        position: relative;
+        z-index: 123;
+    }
+    .btnPanel{
+width: 150px;
+height: 40px;
+font-size: 16px;
+cursor: pointer;
+background-color: rgb(63, 0, 121);
+border: none;
+outline: none;
+color: #fff;
+font-weight: 800;
+    }
+    .btnPanel:hover {
+        cursor: pointer;
+    }
+    .onlineUser {
+        width: 100%;
+        height: 60px;
+        background-color: rgba(92, 17, 158);
+      //  background-color:  53, 7, 138;
+        border-bottom: 3px solid black;
+        cursor: pointer;
+    }
+    .onlineUserLogo {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+       margin-top: 3px;
+       // background-color: ;
+    }
+    .onlineUserName {
+        color: #fff;
+        position: absolute;
+//        padding-left: 60px;
+    }
+    .onlineUserName::after{
+ content: "";
+ width: 10px;
+ height: 10px;
+ border-radius: 50%;
+ background-color: rgba(4, 207, 51);
+ position: absolute;
+ top: 5px;
+ margin-left: 10px;
+//left: 4px;
+    }
+    .onlineCircle {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: rgba(4, 207, 51);
+        position: absolute;
+         
+     //   left: 100px;
+      //  top: 8px;
+    }
+    .onlineLine {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+      //  justify-content: space-between;
+        gap: 50px;
+        width: 100%;
+        margin-left: 50px;
+        position:relative;
+        top: 9px
+      //  margin-top: 8px;
+    //  padding-top: 10px;
+    }
+}
