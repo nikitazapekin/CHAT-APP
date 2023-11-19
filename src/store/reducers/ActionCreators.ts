@@ -39,6 +39,13 @@ export const setCurrentUsername = (currentUsername: string) => (dispatch: AppDis
 export const setCRecipient = (name: string) => (dispatch: AppDispatch) => {
     dispatch(userSlice.actions.setRecipient(name));
 };
+
+
+export const addMessage = (event: string, from: string, text: string) => (dispatch: AppDispatch) => {
+    const privateMessage = {event: event, from: from, text:text}
+    dispatch(userSlice.actions.addMessage(privateMessage));
+   // dispatch(userSlice.actions.setRecipient(name));
+};
 /*
 export const typeMessage = (message: string, author: string) => (dispatch: AppDispatch) => {
     dispatch(userSlice.actions.typeMessage({message, author}));

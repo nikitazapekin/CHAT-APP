@@ -1,7 +1,23 @@
 import {IUser} from "../../models/IUser";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {fetchUsers} from "./ActionCreators";
-
+/*
+interface ArrayOfMessages {
+    event: string,
+from: string,
+text: string
+} */
+type ArrayOfMessages = {
+    event: string;
+    from: string;
+    text: string;
+  };
+  export interface Mes {
+ event: string,
+ from: string,
+ text: string
+  }
+  
 interface UserState {
     users: IUser[];
     isLoading: boolean;
@@ -10,7 +26,24 @@ interface UserState {
     message: string,
     author: string ,
     currentUser: string,
-    recipientSelected: string
+    recipientSelected: string,
+    arrayOfMessages: {
+        data: Array<{//event: string,
+            from: string,
+            text: string
+            }>
+/*data: Array<{
+    event: string,
+from: string,
+text: string
+  }>[]  */
+    }
+ //  arrayOfMessages: ArrayOfMessages[]
+/*  arrayOfMessages: Array<{
+    event: string,
+from: string,
+text: string
+  }>[] */
 }
 
 const initialState: UserState = {
@@ -21,7 +54,10 @@ const initialState: UserState = {
     message: "",
     author: "",
     currentUser: "",
-    recipientSelected: ""
+    recipientSelected: "",
+    arrayOfMessages: {
+        data: []
+    }
 }
 
 export const userSlice = createSlice({
@@ -55,9 +91,34 @@ state.currentUser =action.payload
 state.recipientSelected=action.payload
 console.log("CIRRENT RECIPIENT"+state.recipientSelected)
         },
+        addMessage: (state, action: PayloadAction<ArrayOfMessages>) => {
+            const { event, from, text } = action.payload;
+        //    state.arrayOfMessages.push({ event, from, text });
+     //       state.arrayOfMessages.push(action.payload);
+    // const el = {event: event, from: from, text: text}
+    const el = {from,  text}
+    console.log("actiomn"+JSON.stringify(action.payload))
+   // for(let i=0; i<action.payload.length; i++){
+    //    console.log("ITEM"+JSON.stringify(action.payload.event[i]))
+      //  state.arrayOfMessages.data.push(action.payload.event[i])
+ //   }
+    console.log("EVEMT"+JSON.stringify(event))
+    console.log("ELL"+JSON.stringify(el))
+    console.log("FROOOM"+from)
+    console.log("TEXTT"+text)
+   state.arrayOfMessages.data.push(el)
+  //return { ...state, loading: false, error: action.payload, data: initialState.data };
+            console.log("THIS IS AN ARRAY" +JSON.stringify(state.arrayOfMessages))
+         // return {...state, arrayOfMessages: action.payload}
+          },
 
     },
  
 })
 
 export default userSlice.reducer;
+
+
+//n{"event":[{"event":"privateMessage","from":"cccsa","text":"scasac"},{"event":"privateMessage","from":"cccsa","text":"scasacsc"}]}
+
+//{"data":[{"event":[]},{"event":[{"event":"privateMessage","from":"wdwd","text":"s dccq"}]},{"event":[{"event":"privateMessage","from":"wdwd","text":"s dccq"},{"event":"privateMessage","from":"wdwd","text":"s dccqlu"}]}]}

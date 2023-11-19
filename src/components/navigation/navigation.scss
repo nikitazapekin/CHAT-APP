@@ -3,6 +3,8 @@
     max-width: 100%;
     height: 60px;
     background-color: rgb(65, 4, 136);
+    position: absolute;
+    z-index: 11;
     color: #fff;
     .navigationTitle {
         position: absolute;

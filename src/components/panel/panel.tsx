@@ -8,8 +8,10 @@ import { Link } from "react-router-dom";
 import { useAppSelector } from "../../hooks/redux.ts";
 import { useAppDispatch } from "../../hooks/redux.ts";
 import { setCRecipient } from "../../store/reducers/ActionCreators.ts";
+import { useNavigate } from "react-router-dom";
 const Panel = ({ userList }) => {
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
     const { isVisiblePanel } = useAppSelector(state => state.userReducer);
     const [visible, setVisible] = useState(false);
 
@@ -20,6 +22,7 @@ const Panel = ({ userList }) => {
     const handleSelect = (param: string)=> {
         console.log("seleeeect"+param)
         dispatch(setCRecipient(param))
+        navigate(`/chats/${param}`)
     }
 
     return (
@@ -38,7 +41,7 @@ const Panel = ({ userList }) => {
                                         {item}
                                     </h3>
                                 </div>
-                                <img className="onlineUserLogo" src="data:image/png;base64,..."
+                                <img className="onlineUserLogo" src="https://cdn-icons-png.flaticon.com/512/219/219983.png"
                                     alt="logo"
                                 />
                             </div>
@@ -47,7 +50,7 @@ const Panel = ({ userList }) => {
                 )}
             </div>
         ) : (
-            <></> // This could also be written as null or simply removed
+            <></> 
         )
     );
 };

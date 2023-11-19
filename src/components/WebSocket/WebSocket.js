@@ -4,16 +4,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import Panel from '../panel/panel.tsx';
-import { useAppSelector } from '../../hooks/redux.ts';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux.ts';
 import TypeMessageComponent from '../typeMessageComponent/typeMessageComponents.tsx';
+import { addMessage } from '../../store/reducers/ActionCreators.ts';
 const WebSock = () => {
+    const dispatch = useAppDispatch()
     const {message, author, currentUser, recipientSelected} = useAppSelector(state=>state.userReducer)
 
     
     const {id} =useParams()
     console.log("IID" +id)
-    // const {id} =useRoutes()
-    // console.log("IDD" +id)
+     
    const socket = useRef();
    const [messages, setMessages] = useState([]);
     const [value, setValue] = useState('');
@@ -24,15 +25,11 @@ const WebSock = () => {
     const [userList, setUserList] = useState([]);  
     useEffect(()=> {
         setUsername(currentUser)
-    //setUsername(id)
-    //setRecipient(id)
+    
     }, [currentUser])
     useEffect(()=> {
 
     }, [])
-    useEffect(()=> {
-//setUsername(author)
-    }, [author])
     useEffect(()=> {
         setValue(message)
      
@@ -47,7 +44,7 @@ const WebSock = () => {
                 setConnected(true);
                 const message = {
                     event: 'connection',
-             //   name,
+          
           username,
                     id: Date.now(),
                 };
@@ -82,14 +79,18 @@ const WebSock = () => {
         } 
     
     
-    
+    useEffect(()=> {
+        messages.map((item, index)=> {
+            dispatch(addMessage(messages[index].event, messages[index].from, messages[index].text))
+console.log("MESSAGE"+JSON.stringify(item))
+        })
+    }, [messages])
     
 
   useEffect(()=> {
-   
+   // dispatch(addMessage('privateMessage',currentUser, value))
     const message = {
-        //username,
-       // to: recipient,
+        
     currentUser, 
        to: username,
         text: value,
@@ -98,45 +99,22 @@ const WebSock = () => {
     };
     console.log("MESSAGEEE"+JSON.stringify(message))
   }, [username, recipient, value])
-  /*  const sendMessage = async () => {
-        console.log("heloo")
-        const message = {
-    username:currentUser,
-         //   to: username,
-      to: recipientSelected,
-         //  to: recipient,
-            text: value,
-            id: Date.now(),
-            event: 'privateMessage',
-        };
-        console.log("message to send:"+JSON.stringify(message))
-     //   if (recipient && value) {
-        if (recipientSelected && value) {
-            socket.current.send(JSON.stringify(message));
-            setValue('');
-        }
-    }; */
+
     const sendMessage = async () => {
         console.log("heloo")
-      //  username= currentUser
-        
+      
         const message = {
-  //  username:currentUser,
-         //   to: username,
-    //  to: recipientSelected,
-         //  to: recipient,
          username,
-      //   to: recipient,
       to: recipientSelected,
             text: value,
             id: Date.now(),
             event: 'privateMessage',
         };
         console.log("message to send:"+JSON.stringify(message))
-     //   if (recipient && value) {
         if (recipientSelected && value) {
             socket.current.send(JSON.stringify(message));
             setValue('');
+            dispatch(addMessage('privateMessage',currentUser, value))
         }
     };
 useEffect(()=> {
@@ -169,23 +147,9 @@ console.log("MESS"+messages)
     }/>
 
   
-
-      {/*     <button onClick={onClickHandler}>eeeeeeeeeeeeeee</button> */}
+{/*
             <div>
-              {/*  <div className="form">
-                    <input
-                        value={recipient}
-                        onChange={(e) => setRecipient(e.target.value)}
-                        type="text"
-                        placeholder="Введите имя получателя"
-                    />
-                    <input
-                        value={value}
-                        onChange={(e) => setValue(e.target.value)}
-                        type="text"
-                    />
-                    <button onClick={sendMessage}>Отправить</button>
-</div> */}
+         
                 <div className="messages">
                     {messages.map((mess) => (
                         <div  style={{color: "white"}} key={mess.id}>
@@ -195,19 +159,12 @@ console.log("MESS"+messages)
                         </div>
                     ))}
                 </div>
-             {/*   <div className="user-list" style={{color: "white"}}>
-                    <h3>Online Users:</h3>
-                    <ul>
-                        {userList.map((user) => (
-                            <li style={{color: "white"}} key={user}>{user}</li>
-                            ))}
-                    </ul>
-                        </div> */}
-            </div>
+           
+                    </div> */}
            {/*}  <button onClick={connect}>Войти</button>   */}
                             </div>
            <Panel userList={userList} />
-           <TypeMessageComponent sendMessage={sendMessage} />
+           <TypeMessageComponent sendMessage={sendMessage} value={value} />
         </div>
     );
 };
