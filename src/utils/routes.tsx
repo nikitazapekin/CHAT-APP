@@ -1,10 +1,11 @@
 
 import React from "react"
 import {Route, Routes, Navigate}  from "react-router-dom"
-import { SIGN_UP_ROUTE, SIGN_IN_ROUTE, ACCOUNT_ROUTE } from "./consts.ts"
+import { SIGN_UP_ROUTE, SIGN_IN_ROUTE, ACCOUNT_ROUTE, CHAT_ROOM_ROUTE } from "./consts.ts"
  import RegisterPage from "../pages/registerPage/registerPage.tsx"
  import LoginPage from "../pages/loginPage/loginPage.tsx"
  import AccountPage from "../pages/accountPage/accoundPage.tsx"
+ import ChatRoom from "../pages/chatRoom/chatRoom.tsx"
 const publicRoutes=[
  {
     path: SIGN_UP_ROUTE,
@@ -18,6 +19,10 @@ const publicRoutes=[
     path: ACCOUNT_ROUTE,
     Component: AccountPage
  }, 
+ {
+   path: CHAT_ROOM_ROUTE,
+   Component: ChatRoom
+}, 
 ]
 const privateRoutes =[
     {
@@ -32,17 +37,22 @@ const privateRoutes =[
         path: ACCOUNT_ROUTE,
         Component: AccountPage
      }, 
+     {
+      path: CHAT_ROOM_ROUTE,
+      Component: ChatRoom
+   }, 
   
 ]
 interface AppRoutesProps {
-isAuthenticated: boolean
+isAuthenticated: boolean,
+socketInstance
 }
-const AppRoutes=({isAuthenticated}: AppRoutesProps)=> {
+const AppRoutes=({isAuthenticated, socketInstance}: AppRoutesProps)=> {
    
     return isAuthenticated ?  
     (
         <Routes>
-{privateRoutes.map(({path, Component})=>( <Route  key={path} path={path} element={<Component   />} />)
+{privateRoutes.map(({path, Component})=>( <Route  key={path} path={path} element={<Component socketInstance={socketInstance}  />} />)
 
 )}
 {/*<Route path="*" element={<Navigate replace to={SIGN_UP_ROUTE} />} />  */}
@@ -51,7 +61,7 @@ const AppRoutes=({isAuthenticated}: AppRoutesProps)=> {
     :
     (
         <Routes>
-{publicRoutes.map(({path, Component})=> (<Route   key={path} path={path} element={<Component  />}  />)
+{publicRoutes.map(({path, Component})=> (<Route   key={path} path={path} element={<Component socketInstance={socketInstance}  />}  />)
 )}
 {/*<Route path="*" element={<Navigate replace to={SIGN_UP_ROUTE} />} />   */}
         </Routes>

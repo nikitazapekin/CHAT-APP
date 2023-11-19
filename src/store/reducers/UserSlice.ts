@@ -6,12 +6,22 @@ interface UserState {
     users: IUser[];
     isLoading: boolean;
     error: string;
+    isVisiblePanel: boolean,
+    message: string,
+    author: string ,
+    currentUser: string,
+    recipientSelected: string
 }
 
 const initialState: UserState = {
     users: [],
     isLoading: false,
     error: '',
+    isVisiblePanel: true,
+    message: "",
+    author: "",
+    currentUser: "",
+    recipientSelected: ""
 }
 
 export const userSlice = createSlice({
@@ -19,7 +29,7 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         usersFetching: (state) => {
-            state.isLoading = true;
+            state.isLoading = false;
         },
         usersFetchingSuccess: (state, action: PayloadAction<IUser[]>) => {
             state.isLoading = false;
@@ -30,22 +40,24 @@ export const userSlice = createSlice({
             state.isLoading = false;
             state.error = action.payload;
         },
+        switchPanelVisibility: (state, action: PayloadAction<boolean>) => {
+            state.isVisiblePanel = action.payload;
+        },
+        typeMessage: (state, action: PayloadAction<{message: string, author:string}> ) => {
+            state.message = action.payload.message;
+            state.author=action.payload.author;
+            console.log("AUTH"+state.author+":"+state.message)
+        },
+        setCurrentUsername: (state, action: PayloadAction<string>)=>{
+state.currentUser =action.payload
+        },
+        setRecipient: (state, action: PayloadAction<string>)=>{ 
+state.recipientSelected=action.payload
+console.log("CIRRENT RECIPIENT"+state.recipientSelected)
+        },
 
     },
-   /* extraReducers: {
-        [fetchUsers.fulfilled.type]: (state, action: PayloadAction<IUser[]>) => {
-            state.isLoading = false;
-            state.error = ''
-            state.users = action.payload;
-        },
-        [fetchUsers.pending.type]: (state) => {
-            state.isLoading = true;
-        },
-        [fetchUsers.rejected.type]: (state,  action: PayloadAction<string>) => {
-            state.isLoading = false;
-            state.error = action.payload
-        },
-    } */
+ 
 })
 
 export default userSlice.reducer;

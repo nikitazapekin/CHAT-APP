@@ -40,11 +40,11 @@ function App() {
 dispatch(fetchUsers());
   }, [])
  
+  let socketInstance; 
     return (
   
        
-     
-      <AppRoutes isAuthenticated={false} />
+      <AppRoutes socketInstance={socketInstance} isAuthenticated={false} />
 
   );
 }
