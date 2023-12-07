@@ -147,8 +147,12 @@ function handleConnection(message, ws) {
 }
 
 function handlePrivateMessage(message) {
-    const { to, text } = message;
+    const { to, text, username } = message;
     const from = message.username;
+    console.log("USERR"+username)
+   // console.log("reci[ieent"+ recipient)
+    console.log("message "+text)
+
 console.log("from "+from +": text "+text+": recipient"+to )
 console.log("clients" +JSON.stringify(clients))
 for (const [clientId, clientSocket] of clients) {
@@ -166,11 +170,17 @@ for (const [clientId, clientSocket] of clients) {
     if (clients.has(to)) {
       console.log("user is found:"+to)
         const targetClient = clients.get(to);
-        targetClient.send(JSON.stringify({
-            event: 'privateMessage',
-            from,
-            text,
-        }));
+        console.log("TARGET CLIENT"+targetClient)
+console.log("FUNCTION TO SEND from"+from)
+console.log("username"+ username)
+ //     if(from==username ){
+
+       targetClient.send(JSON.stringify({
+          event: 'privateMessage',
+          from,
+          text,
+        })); 
+  //    }
     } 
 }
 
@@ -187,38 +197,3 @@ function broadcastUserList() {
         client.send(userListMessage);
     });
 }
-/*
-const express = require('express');
-const config = require('config');
-const mongoose = require('mongoose');
-const mysql = require("mysql")
-const app = express();
-
-
-
-app.use(express.json());
-const db= mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "test"
-})
-// Routes
-app.use('/api/auth', require('./routes/auth.routes'));
-//app.use('/api/link', require('./routes/link.routes'))
-const PORT = config.get('PORT') || 5000;
-
-async function start() {
-
-    app.listen(PORT, () => {
-      console.log(`Server started on port ${PORT}`);
-    });
-  }
-
-start();
-
-// Global error handler middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something went wrong!');
-}); */

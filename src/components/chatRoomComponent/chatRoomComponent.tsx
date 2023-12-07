@@ -2,6 +2,8 @@ import React from "react";
 import "./chatRoomComponent.scss"
 import TypeMessageComponent from "../typeMessageComponent/typeMessageComponents.tsx";
 import { useAppSelector } from "../../hooks/redux.ts";
+import SmileyBox from "../smileyBox/smileyBox.tsx";
+//import Logo from "../../asserts/logo.png"
 const ChatRoomComponent = () => {
     const {arrayOfMessages, currentUser}= useAppSelector(state=>state.userReducer)
     return ( 
@@ -13,8 +15,8 @@ const ChatRoomComponent = () => {
     <div className="messageFromUser"> 
 {item.from!=currentUser ? (
 <>
-    <img className="onlineUserLogo" src="https://cdn-icons-png.flaticon.com/512/219/219983.png"
-    alt="logo" />
+  {/*  <img className="onlineUserLogo" src={Logo}
+    alt="logo" /> */}
     <div className="userDataMessage">
 
                                     <h1 className="messageFromUserName">  {item.from} </h1>
@@ -37,6 +39,9 @@ const ChatRoomComponent = () => {
     </div>
 ))}
 </div>
+
+
+{/*<SmileyBox />*/}
         </div>
      );
 }

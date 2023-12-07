@@ -1,0 +1,85 @@
+.smileyBox {
+    width: 400px;
+    height: 80vh;
+    overflow-y: scroll;
+    background-color: rgb(59, 4, 121);
+    position: absolute;
+    right: 0;
+    padding-bottom: 250px;
+    padding-top: 100px;
+
+    .smileySelection {
+        position: fixed;
+       // position: absolute;
+      //  bottom: 0;
+     //   margin-bottom: 200px;
+       // display: flex;
+     //   justify-content: center;
+   //     width: 100%;
+    //    font-size: 32px;
+     //   gap: 3px;
+      //  background-color: rgb(92, 3, 156);
+      background-color: red;
+      width: 400px;
+
+ 
+ top:715px;
+  // margin-bottom: 100px;
+      height: 50px;
+      z-index: 1111111111111111;
+    //  top: 0;
+
+
+
+
+ display: flex;
+ margin: 0 auto;
+   //   justify-content: center;
+    //  width: 100%;
+     //  font-size: 32px;
+   //    gap: 3px;
+      background-color: rgb(92, 3, 156);
+    }
+.smileySelectionItem {
+    cursor: pointer;
+    transition: 0.5s;
+
+}
+.smileySelectionItem:hover {
+font-size: 35px;
+}
+.smileyBoxEmodjies {
+    max-width: 90%;
+    display: grid;
+    font-size: 25px;
+    margin: 0 auto;
+    grid-template-columns: repeat(7, 50px);
+   // margin-top: 100px;
+ //   padding-bottom: 100px;
+  // padding-top: 100px;
+}
+}
+.smileyBoxEmodjiesItem{
+    cursor: pointer;
+}
+.smileySelectionWrapper {
+    display: flex;
+    flex-direction: row;
+     gap:6px;
+   //  width: 100%;
+    // justify-content: center;
+   margin: 0 auto;
+   font-size: 32px;
+}
+
+.smileyBox::-webkit-scrollbar {
+    width: 7px;
+}
+
+.smileyBox::-webkit-scrollbar-track {
+    background: black;
+}
+
+.smileyBox::-webkit-scrollbar-thumb {
+    background: #333; /* или любой другой желаемый цвет */
+}

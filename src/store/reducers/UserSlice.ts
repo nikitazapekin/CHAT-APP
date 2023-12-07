@@ -11,6 +11,7 @@ type ArrayOfMessages = {
     event: string;
     from: string;
     text: string;
+    too: string
   };
   export interface Mes {
  event: string,
@@ -23,14 +24,18 @@ interface UserState {
     isLoading: boolean;
     error: string;
     isVisiblePanel: boolean,
+    isVisibleTextPanel: boolean,
+    isVisibleEmojePanel: boolean,
     message: string,
     author: string ,
     currentUser: string,
     recipientSelected: string,
     arrayOfMessages: {
         data: Array<{//event: string,
+            event: string,
             from: string,
-            text: string
+            text: string,
+            too: string
             }>
 /*data: Array<{
     event: string,
@@ -51,6 +56,9 @@ const initialState: UserState = {
     isLoading: false,
     error: '',
     isVisiblePanel: true,
+    isVisibleEmojePanel: false,
+ //   isVisibleTextPanel: false,
+ isVisibleTextPanel: true,
     message: "",
     author: "",
     currentUser: "",
@@ -87,29 +95,27 @@ export const userSlice = createSlice({
         setCurrentUsername: (state, action: PayloadAction<string>)=>{
 state.currentUser =action.payload
         },
+        setVisibleTextPanel: (state, action: PayloadAction<boolean>)=> {
+state.isVisibleTextPanel =action.payload
+        },
+
+        setVisibleEmojePanel: (state, action: PayloadAction<boolean>)=> {
+            state.isVisibleEmojePanel =action.payload
+                    },
+
         setRecipient: (state, action: PayloadAction<string>)=>{ 
 state.recipientSelected=action.payload
 console.log("CIRRENT RECIPIENT"+state.recipientSelected)
         },
         addMessage: (state, action: PayloadAction<ArrayOfMessages>) => {
-            const { event, from, text } = action.payload;
-        //    state.arrayOfMessages.push({ event, from, text });
-     //       state.arrayOfMessages.push(action.payload);
-    // const el = {event: event, from: from, text: text}
-    const el = {from,  text}
-    console.log("actiomn"+JSON.stringify(action.payload))
-   // for(let i=0; i<action.payload.length; i++){
-    //    console.log("ITEM"+JSON.stringify(action.payload.event[i]))
-      //  state.arrayOfMessages.data.push(action.payload.event[i])
- //   }
-    console.log("EVEMT"+JSON.stringify(event))
-    console.log("ELL"+JSON.stringify(el))
-    console.log("FROOOM"+from)
-    console.log("TEXTT"+text)
+            const { event, from, text, too } = action.payload;
+      
+    const el = {event, from,  text, too}
+    
    state.arrayOfMessages.data.push(el)
-  //return { ...state, loading: false, error: action.payload, data: initialState.data };
+ 
             console.log("THIS IS AN ARRAY" +JSON.stringify(state.arrayOfMessages))
-         // return {...state, arrayOfMessages: action.payload}
+         
           },
 
     },
@@ -118,7 +124,4 @@ console.log("CIRRENT RECIPIENT"+state.recipientSelected)
 
 export default userSlice.reducer;
 
-
-//n{"event":[{"event":"privateMessage","from":"cccsa","text":"scasac"},{"event":"privateMessage","from":"cccsa","text":"scasacsc"}]}
-
-//{"data":[{"event":[]},{"event":[{"event":"privateMessage","from":"wdwd","text":"s dccq"}]},{"event":[{"event":"privateMessage","from":"wdwd","text":"s dccq"},{"event":"privateMessage","from":"wdwd","text":"s dccqlu"}]}]}
+ 

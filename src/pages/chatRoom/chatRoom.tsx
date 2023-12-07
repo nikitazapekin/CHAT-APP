@@ -15,7 +15,7 @@ const ChatRoom = ({socketInstance}: any) => {
         <>
      <Navigation />
    <ChatRoomComponent />
-   <WebSock />
+  <WebSock /> 
         </>
      );
 }

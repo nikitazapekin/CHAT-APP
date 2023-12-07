@@ -41,11 +41,28 @@ export const setCRecipient = (name: string) => (dispatch: AppDispatch) => {
 };
 
 
-export const addMessage = (event: string, from: string, text: string) => (dispatch: AppDispatch) => {
-    const privateMessage = {event: event, from: from, text:text}
+export const addMessage = (event: string, from: string, text: string, to: string) => (dispatch: AppDispatch) => {
+    const privateMessage = {event: event, from: from, text:text, too: to}
     dispatch(userSlice.actions.addMessage(privateMessage));
    // dispatch(userSlice.actions.setRecipient(name));
 };
+
+
+
+
+export const setVisibleTextPanel = (visibility: boolean) => (dispatch: AppDispatch) => {
+  //  const privateMessage = {event: event, from: from, text:text, too: to}
+    dispatch(userSlice.actions.setVisibleTextPanel(visibility));
+   // dispatch(userSlice.actions.setRecipient(name));
+};
+
+
+
+export const setVisibleEmojePanel = (visibility: boolean) => (dispatch: AppDispatch) => {
+    //  const privateMessage = {event: event, from: from, text:text, too: to}
+      dispatch(userSlice.actions.setVisibleEmojePanel(visibility));
+     // dispatch(userSlice.actions.setRecipient(name));
+  };
 /*
 export const typeMessage = (message: string, author: string) => (dispatch: AppDispatch) => {
     dispatch(userSlice.actions.typeMessage({message, author}));

@@ -1,5 +1,5 @@
 
-
+import "./webSocket.scss"
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -7,9 +7,10 @@ import Panel from '../panel/panel.tsx';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux.ts';
 import TypeMessageComponent from '../typeMessageComponent/typeMessageComponents.tsx';
 import { addMessage } from '../../store/reducers/ActionCreators.ts';
+import Toast from '../toast/toast.tsx';
 const WebSock = () => {
     const dispatch = useAppDispatch()
-    const {message, author, currentUser, recipientSelected} = useAppSelector(state=>state.userReducer)
+    const {message, author, currentUser, recipientSelected, isVisibleTextPanel} = useAppSelector(state=>state.userReducer)
 
     
     const {id} =useParams()
@@ -23,6 +24,7 @@ const WebSock = () => {
  const [username, setUsername] = useState(currentUser);
     const [recipient, setRecipient] = useState('');
     const [userList, setUserList] = useState([]);  
+    const [toasts, setToasts] = useState([]);
     useEffect(()=> {
         setUsername(currentUser)
     
@@ -81,14 +83,20 @@ const WebSock = () => {
     
     useEffect(()=> {
         messages.map((item, index)=> {
-            dispatch(addMessage(messages[index].event, messages[index].from, messages[index].text))
+            dispatch(addMessage(messages[index].event, messages[index].from, messages[index].text, currentUser))
 console.log("MESSAGE"+JSON.stringify(item))
+//return <Toast />
+console.log("MESSSSSSSSSSSSSSSSSSAGE ITEM"+item)
+const newToasts = messages.map((item, index) => {
+    return <Toast text={item.text} from={item.from} key={index} message={item} />;
+  });
+  setToasts(newToasts);
         })
     }, [messages])
     
 
   useEffect(()=> {
-   // dispatch(addMessage('privateMessage',currentUser, value))
+   
     const message = {
         
     currentUser, 
@@ -114,7 +122,7 @@ console.log("MESSAGE"+JSON.stringify(item))
         if (recipientSelected && value) {
             socket.current.send(JSON.stringify(message));
             setValue('');
-            dispatch(addMessage('privateMessage',currentUser, value))
+            dispatch(addMessage('privateMessage',currentUser, value, username))
         }
     };
 useEffect(()=> {
@@ -123,19 +131,21 @@ console.log("MESS"+messages)
 }, [messages])
 
     return (
-        <div>
+        <div style={{width: "100%", height: "100%", backgroundColor: "red"}}>
 
-      {/*  <div className="center" style={{position: "relative", left: "1000px", display: "none"}}>  */}
+    
      
      
      
+      {toasts}
       <div className="center" style={{position: "absolute", top:"400px", left: "1000px"}}> 
      
      
      
      
-     
-     
+     <div className='toastBlock'>
+
+     </div>
      
      
      
@@ -147,24 +157,18 @@ console.log("MESS"+messages)
     }/>
 
   
-{/*
-            <div>
-         
-                <div className="messages">
-                    {messages.map((mess) => (
-                        <div  style={{color: "white"}} key={mess.id}>
-                            <div className="message">
-                                {mess.from}: {mess.text}
-                            </div>
-                        </div>
-                    ))}
-                </div>
-           
-                    </div> */}
-           {/*}  <button onClick={connect}>Войти</button>   */}
+
                             </div>
            <Panel userList={userList} />
-           <TypeMessageComponent sendMessage={sendMessage} value={value} />
+
+           {isVisibleTextPanel ? (
+            <>
+            <TypeMessageComponent sendMessage={sendMessage} value={value} />
+            
+            </>
+           ) : (
+            <></>
+           )}
         </div>
     );
 };

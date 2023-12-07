@@ -23,6 +23,7 @@ import {useAppDispatch, useAppSelector} from "./hooks/redux.ts";
 import {fetchUsers} from "./store/reducers/ActionCreators.ts";
 import RegisterPage from './pages/registerPage/registerPage.tsx';
 import AppRoutes from './utils/routes.tsx';
+import WebSock from './components/WebSocket/WebSocket.js';
 
 //import PostContainer from "./components/PostContainer.tsx";
 //import PostContainer2 from "./components/PostContainer2";
@@ -43,8 +44,11 @@ dispatch(fetchUsers());
   let socketInstance; 
     return (
   
-       
+       <>
+    
+
       <AppRoutes socketInstance={socketInstance} isAuthenticated={false} />
+       </>
 
   );
 }
