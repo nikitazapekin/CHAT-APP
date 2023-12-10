@@ -1,12 +1,7 @@
 import {IUser} from "../../models/IUser";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {fetchUsers} from "./ActionCreators";
-/*
-interface ArrayOfMessages {
-    event: string,
-from: string,
-text: string
-} */
+ 
 type ArrayOfMessages = {
     event: string;
     from: string;
@@ -29,6 +24,7 @@ interface UserState {
     isVisiblePanel: boolean,
     isVisibleTextPanel: boolean,
     isVisibleEmojePanel: boolean,
+    isVisibleGroup: boolean,
     message: string,
     userList: String[],
     author: string ,
@@ -57,6 +53,7 @@ const initialState: UserState = {
     isLoading: false,
     error: '',
     isVisiblePanel: true,
+    isVisibleGroup: false,
     isVisibleEmojePanel: false,
  //   isVisibleTextPanel: false,
  isVisibleTextPanel: true,
@@ -123,6 +120,18 @@ state.isVisibleTextPanel =action.payload
         setVisibleEmojePanel: (state, action: PayloadAction<boolean>)=> {
             state.isVisibleEmojePanel =action.payload
                     },
+
+
+
+
+                  //  setVisibleGroup: (state, action: PayloadAction<boolean>)=> {
+                    setVisibleGroup: (state )=> {
+                     //   state.isVisibleGroup =action.payload
+
+                     state.isVisibleGroup =     !state.isVisibleGroup
+                                },
+            
+
 
         setRecipient: (state, action: PayloadAction<string>)=>{ 
 state.recipientSelected=action.payload

@@ -68,9 +68,6 @@ const handleOpacity =()=> {
 
 
       <img onClick={handleButtonClick} className="ssendTypedMsg" src={Plane} alt="senf" />
-     {/* <button className="sendTypedMessage" onClick={handleButtonClick}>
-        Send
-  </button> */}
     </div>
     {vis ? (
 

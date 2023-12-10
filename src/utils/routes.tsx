@@ -1,11 +1,12 @@
 
 import React from "react"
 import {Route, Routes, Navigate}  from "react-router-dom"
-import { SIGN_UP_ROUTE, SIGN_IN_ROUTE, ACCOUNT_ROUTE, CHAT_ROOM_ROUTE } from "./consts.ts"
+import { SIGN_UP_ROUTE, SIGN_IN_ROUTE, ACCOUNT_ROUTE, CHAT_ROOM_ROUTE, GROUP_ROOM_ROUTE } from "./consts.ts"
  import RegisterPage from "../pages/registerPage/registerPage.tsx"
  import LoginPage from "../pages/loginPage/loginPage.tsx"
  import AccountPage from "../pages/accountPage/accoundPage.tsx"
  import ChatRoom from "../pages/chatRoom/chatRoom.tsx"
+ import GroupPage from "../pages/groupPage/groupPage.tsx"
 const publicRoutes=[
  {
     path: SIGN_UP_ROUTE,
@@ -22,6 +23,10 @@ const publicRoutes=[
  {
    path: CHAT_ROOM_ROUTE,
    Component: ChatRoom
+}, 
+{
+   path: GROUP_ROOM_ROUTE,
+   Component: GroupPage
 }, 
 ]
 const privateRoutes =[
@@ -41,7 +46,10 @@ const privateRoutes =[
       path: CHAT_ROOM_ROUTE,
       Component: ChatRoom
    }, 
-  
+   {
+      path: GROUP_ROOM_ROUTE,
+      Component: GroupPage
+   }, 
 ]
 interface AppRoutesProps {
 isAuthenticated: boolean,

@@ -128,11 +128,14 @@ wss.on('connection', function connection(ws) {
             case 'privateMessage':
                 handlePrivateMessage(message);
                 break;
+           case 'publicMessage':
+                  handlePublicMessage(message);
+                  break;
         }
     });
 
     ws.on('close', () => {
-        // Remove the client from the clients map
+        
         clients.delete(ws.username);
         broadcastUserList();
     });
@@ -145,7 +148,30 @@ function handleConnection(message, ws) {
 
     broadcastUserList();
 }
+function handlePublicMessage(message) {
+  const { title, participants, id, event } = message;
+console.log("PUBLIC" +title, participants, id, event)
 
+
+for(let i=0; i< participants.length; i++){
+
+  if (clients.has(participants[i])) {
+   
+    const targetClient = clients.get(participants[i]);
+    
+   targetClient.send(JSON.stringify({
+      event: 'publicMessage',
+participants: participants,
+title: title,
+    })); 
+  }
+//    }
+} 
+
+
+
+
+}
 function handlePrivateMessage(message) {
     const { to, text, username } = message;
     const from = message.username;
@@ -157,7 +183,6 @@ console.log("from "+from +": text "+text+": recipient"+to )
 console.log("clients" +JSON.stringify(clients))
 for (const [clientId, clientSocket] of clients) {
   console.log(`Client ID: ${clientId}`);
-  // Perform actions with clientSocket if needed
 }
  
     if (clients.has(to)) {

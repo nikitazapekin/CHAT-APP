@@ -11,7 +11,7 @@ import Toast from '../toast/toast.tsx';
 
 const WebSock = () => {
     const dispatch = useAppDispatch()
-    const {message, author, currentUser, recipientSelected, isVisibleTextPanel} = useAppSelector(state=>state.userReducer)
+    const {message, author, currentUser, recipientSelected, isVisibleTextPanel, arrayOfGroups} = useAppSelector(state=>state.userReducer)
 
     
     const {id} =useParams()
@@ -25,6 +25,7 @@ const WebSock = () => {
  const [username, setUsername] = useState(currentUser);
     const [recipient, setRecipient] = useState('');
     const [userList, setUserList] = useState([]);  
+    const [groupList, setGroupList] = useState([]);  
     const [toasts, setToasts] = useState([]);
     useEffect(()=> {
         setUsername(currentUser)
@@ -63,7 +64,7 @@ const WebSock = () => {
                 const message = JSON.parse(event.data);
     console.log("receivedMessage"+JSON.stringify(message))
     console.log("USER_LIST"+message.userList)
-    dispatch(clearUserList())
+   // dispatch(clearUserList())
 
     const users = message.userList
 
@@ -76,6 +77,9 @@ const WebSock = () => {
                         setUserList(message.userList);
                   
                         break; 
+                        case 'publicMessage':
+setGroupList(prev=>[...prev, message.title])
+                        break
                     default:
                         break;
                 }
@@ -102,19 +106,7 @@ const newToasts = messages.map((item, index) => {
         })
     }, [messages])
     
-
- /* useEffect(()=> {
-   
-    const message = {
-        
-    currentUser, 
-       to: username,
-        text: value,
-        id: Date.now(),
-        event: 'privateMessage',
-    };
-    console.log("MESSAGEEE"+JSON.stringify(message))
-  }, [username, recipient, value]) */
+ 
 
     const sendMessage = async () => {
         console.log("heloo")
@@ -130,11 +122,28 @@ const newToasts = messages.map((item, index) => {
         if (recipientSelected && value) {
             socket.current.send(JSON.stringify(message));
             setValue('');
-           // dispatch(addMessage('privateMessage',currentUser, value, username))
+         
 
            dispatch(addMessage('privateMessage',currentUser, value,  recipientSelected))
         }
     };
+console.log("LENGTH"+arrayOfGroups.data.length)
+console.log("GGROU{S"+arrayOfGroups.data)
+useEffect(()=> {
+    if( arrayOfGroups.data.length>0){
+        const message = {
+              title: arrayOfGroups.data[arrayOfGroups.data.length-1].title,
+            participants: arrayOfGroups.data[arrayOfGroups.data.length-1].participants,
+            id: Date.now(),
+            event: 'publicMessage',
+        };
+        console.log("PUBLIC"+JSON.stringify(message))
+        socket.current.send(JSON.stringify(message));
+    }
+
+}, [arrayOfGroups])
+
+    
 useEffect(()=> {
     console.log("==================================================================")
 console.log("MESS"+messages)
@@ -169,7 +178,7 @@ console.log("MESS"+messages)
   
 
                             </div>
-           <Panel userList={userList} />
+           <Panel userList={userList} groupList={groupList} />
 
            {isVisibleTextPanel ? (
             <>

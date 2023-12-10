@@ -63,11 +63,17 @@ export const setGroup = (visibility: IGroup) => (dispatch: AppDispatch) => {
 
 
 export const setVisibleTextPanel = (visibility: boolean) => (dispatch: AppDispatch) => {
-  //  const privateMessage = {event: event, from: from, text:text, too: to}
+ 
     dispatch(userSlice.actions.setVisibleTextPanel(visibility));
-   // dispatch(userSlice.actions.setRecipient(name));
+  
 };
 
+
+
+export const setVisibleGroup = ( ) => (dispatch: AppDispatch) => {
+  
+   dispatch(userSlice.actions.setVisibleGroup( ));
+};
 
 
 export const setVisibleEmojePanel = (visibility: boolean) => (dispatch: AppDispatch) => {

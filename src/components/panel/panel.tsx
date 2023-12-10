@@ -7,11 +7,12 @@ import "./panel.scss";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../hooks/redux.ts";
 import { useAppDispatch } from "../../hooks/redux.ts";
-import { setCRecipient, settUserList } from "../../store/reducers/ActionCreators.ts";
+import { setCRecipient, setVisibleGroup, settUserList } from "../../store/reducers/ActionCreators.ts";
+import GroupImage from "../../asserts/users.jpg"
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Group from "../group/group.tsx";
-const Panel = ({ userList }) => {
+const Panel = ({ userList, groupList }) => {
     useEffect(()=> {
         console.log(":IST" +userList)
         for(let i=0; i<userList.length; i++){
@@ -34,7 +35,8 @@ const Panel = ({ userList }) => {
         setVisibleChats(!visibleChats);
     };
     const handleClickGroup = ( ) => {
-        setVisibleGroups(!visibleGroups);
+       // setVisibleGroups(!visibleGroups);
+       dispatch(setVisibleGroup())
 
     }
     const handleSelect = (param: string)=> {
@@ -42,7 +44,9 @@ const Panel = ({ userList }) => {
         dispatch(setCRecipient(param))
         navigate(`/chats/${param}`)
     }
-
+useEffect(()=> {
+    console.log("GROUP LUST"+groupList)
+}, [ groupList])
     return (
         isVisiblePanel ? (
             <div className="panel">
@@ -58,7 +62,7 @@ const Panel = ({ userList }) => {
 
              
                 {visible && (
-                    userList.map(item => (
+                 userList.map(item => (
                         <Link onClick={()=>handleSelect(item)} key={item} style={{ textDecoration: "none" }} to={`/chats/${item}`}>
                             <div className="onlineUser" key={item}>
                                 <div className="onlineLine">
@@ -78,15 +82,15 @@ const Panel = ({ userList }) => {
 {visibleChats && (
 
 
-                    userList.map(item => (
-                        <Link onClick={()=>handleSelect(item)} key={item} style={{ textDecoration: "none" }} to={`/chats/${item}`}>
+               groupList.map(item => (
+                        <Link onClick={()=>handleSelect(item)} key={item} style={{ textDecoration: "none" }} to={`/group/${item}`}>
                             <div className="onlineUser" key={item}>
                                 <div className="onlineLine">
                                     <h3 className="onlineUserName">
                                         {item}
                                     </h3>
                                 </div>
-                                <img className="onlineUserLogo" src="https://cdn-icons-png.flaticon.com/512/219/219983.png"
+                                <img className="onlineUserLogo" src={GroupImage}
                                     alt="logo"
                                 />
                             </div>

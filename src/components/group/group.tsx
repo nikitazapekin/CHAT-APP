@@ -7,12 +7,14 @@ import React, { useEffect, useState, useRef } from "react";
 import { useAppSelector } from "../../hooks/redux.ts";
 import { useAppDispatch } from "../../hooks/redux.ts";
 import Del from "../../asserts/del.png"
-import { setGroup } from "../../store/reducers/ActionCreators.ts";
+
+import { setGroup, setVisibleGroup } from "../../store/reducers/ActionCreators.ts";
  
 const Group = () => {
-
+     //const {} = useAppSe
     //trinsicElements.input: React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
-    const { userList } = useAppSelector((state) => state.userReducer);
+    const [titleValue, setTitleValue] = useState(""); 
+    const { userList, isVisibleGroup } = useAppSelector((state) => state.userReducer);
     const [participants, setParticipants] = useState<any>([]);
     const [selectedParticipant, setSelectedParticipant] = useState("");
     const dispatch = useAppDispatch();
@@ -29,25 +31,33 @@ const Group = () => {
     };
 const handleSubmit =()=> {
 const group = {
-title: inputValue.current?.textContent,
+title: titleValue,
 participants: participants
 }
+ 
 if(typeof group.title==="string"){
-
+dispatch(setVisibleGroup())
     dispatch(setGroup(group))
 }
 } 
 
+
+const handleTitleChange = (event) => {
+    setTitleValue(event.target.value); 
+};
 const handleDelete = (param: string) => {
     const updatedParticipants = participants.filter((participant: string) => participant !== param);
     setParticipants(updatedParticipants);
 };
 
     return (
-        <div className="group">
+<>
+        {isVisibleGroup ? (
+            
+            <div className="group">
             <h1>Add participants</h1>
             <h3 className="chatTitle">Title</h3>
-            <input className="titleOfChat"   ref={inputValue} />
+            <input className="titleOfChat" onChange={handleTitleChange} />
             <h3 className="addParticipants">Add participants</h3>
             <select value={selectedParticipant} onChange={handleParticipantChange}>
                 <option value="">Select participant</option>
@@ -71,9 +81,15 @@ const handleDelete = (param: string) => {
                         </div>
                     ))}
                 </ul>
-            </div>
-            <button className="submitGroup"  onClick={handleSubmit}>Submit</button>
-        </div>
+                </div>
+                <button className="submitGroup"  onClick={handleSubmit}>Submit</button>
+                </div> 
+                
+                ) : (
+                    <>
+                    </>
+                )}
+                </>
     );
 };
 
