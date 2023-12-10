@@ -11,7 +11,7 @@ const LoginPage = ({socketInstance}: any) => {
         <Navigation />
         <LoginBox />
       
-        <img src={Tel}  style={{width: "400px", height: "400px"}}/>
+ 
         </>
      );
 }

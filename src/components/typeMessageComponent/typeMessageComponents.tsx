@@ -10,6 +10,7 @@ import  Sm  from "../../asserts/sm.png"
 import Plane from "../../asserts/plane.png"
 import { setVisibleEmojePanel } from "../../store/reducers/ActionCreators.ts";
 const TypeMessageComponent = ({ sendMessage, value }) => {
+ // const TypeMessageComponent = ({  }) => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const [vis, setVis]=useState(false)

@@ -8,14 +8,13 @@ const ChatRoom = ({socketInstance}: any) => {
   const dispatch =useAppDispatch()
   useEffect(()=> {
     dispatch(switchVisibilityOfPanel(true));
-//dispatch(switchVisibilityOfPanel)
   }, [])
     return ( 
 
         <>
      <Navigation />
    <ChatRoomComponent />
-  <WebSock /> 
+  <WebSock />  
         </>
      );
 }

@@ -14,7 +14,7 @@ interface MessageType {
     from: string;
     text: string;
     to: string;
-    // Add other properties if present in your message objects
+  
 }
 const ChatRoomComponent = () => {
     const {arrayOfMessages, currentUser}= useAppSelector(state=>state.userReducer)
@@ -29,33 +29,11 @@ useEffect(()=> {
     const [arrOfMsg, setArrOfMsg] =useState<MessageType[]>([]);
     const {id} =useParams()
     console.log("IDDD"+id)
-   /* useEffect(()=> {
-for(let i=0; i<arrayOfMessages.data.length; i++){
-if((arrayOfMessages[i].data.from!=currentUser && arrayOfMessages[i].data.from==id) ||  (arrayOfMessages[i].data.from!=id && arrayOfMessages[i].data.from==currentUser)  ){
-//setArrOfMsg(prev=>prev.push(arrayOfMessages[i].data))
-setArrOfMsg([prev=>prev,arrayOfMessages[i].data ])
-}
-}
-    }, [arrayOfMessages]) */
-
-
-   /* useEffect(() => {
-        const filteredMessages = [];
-        for (let i = 0; i < arrayOfMessages.data.length; i++) {
-            if (
-                (arrayOfMessages.data[i].from !== currentUser && arrayOfMessages.data[i].from === id) ||
-                (arrayOfMessages.data[i].from !== id && arrayOfMessages.data[i].from === currentUser)
-            ) {
-                filteredMessages.push(arrayOfMessages.data[i]);
-            }
-        }
-        setArrOfMsg(filteredMessages);
-    }, [arrayOfMessages, currentUser, id]); */
 
     
     return ( 
         <div className="chatRoomComponent">
-{/*<TypeMessageComponent />  */}
+ 
 <div className="messagesBox">
 
 {arrayOfMessages.data.map((item, index)=> (
@@ -72,12 +50,7 @@ setArrOfMsg([prev=>prev,arrayOfMessages[i].data ])
                                         ) : (
                                             <>
 
-                                            {/*
- <div className="youDataMessage">
-
-<h1 className="messageFromYou"> You </h1>
-<h2 className="messageFromyou">{item.text}</h2>
-                                        </div> */}
+  
 
                                             </>
                                         )
@@ -103,8 +76,8 @@ setArrOfMsg([prev=>prev,arrayOfMessages[i].data ])
 ))}
 </div>
 
+ 
 
-{/*<SmileyBox />*/}
         </div>
      );
 }

@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux.ts';
 import TypeMessageComponent from '../typeMessageComponent/typeMessageComponents.tsx';
 import { addMessage, clearUserList, settUserList } from '../../store/reducers/ActionCreators.ts';
 import Toast from '../toast/toast.tsx';
+import Group from "../group/group.tsx";
 
 const WebSock = () => {
     const dispatch = useAppDispatch()
@@ -15,7 +16,7 @@ const WebSock = () => {
 
     
     const {id} =useParams()
-    console.log("IID" +id)
+  //  console.log("IID" +id)
      
    const socket = useRef();
    const [messages, setMessages] = useState([]);
@@ -26,6 +27,8 @@ const WebSock = () => {
     const [recipient, setRecipient] = useState('');
     const [userList, setUserList] = useState([]);  
     const [groupList, setGroupList] = useState([]);  
+
+    const [grouppList, setGrouppList] = useState([]);  
     const [toasts, setToasts] = useState([]);
     useEffect(()=> {
         setUsername(currentUser)
@@ -44,9 +47,12 @@ const WebSock = () => {
     
         function connect() {
             socket.current = new WebSocket('ws://localhost:5000');
-    
+           if(!id.includes("group")) {
             socket.current.onopen = () => {
-                const name= id;
+               let name=""
+              // if(!id.includes("chat")) {
+                name=id
+                // const name= id;
                 console.log("NAME"+name)
                 setConnected(true);
                 const message = {
@@ -57,15 +63,14 @@ const WebSock = () => {
                 };
                 socket.current.send(JSON.stringify(message));
                 console.log("CURRENT CONNECTION "+JSON.stringify(message))
+          //  }
             }; 
-    
-            socket.current.onmessage = (event) => {
+        }
+         socket.current.onmessage = (event) => {
                 console.log("receivweeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed" +event.data)
                 const message = JSON.parse(event.data);
     console.log("receivedMessage"+JSON.stringify(message))
     console.log("USER_LIST"+message.userList)
-   // dispatch(clearUserList())
-
     const users = message.userList
 
     console.log(message)
@@ -78,7 +83,10 @@ const WebSock = () => {
                   
                         break; 
                         case 'publicMessage':
-setGroupList(prev=>[...prev, message.title])
+                            console.log("CASE" +JSON.stringify(message))
+                     //  setGroupList(message.title)
+                     setGrouppList(prev => [...prev, message.title]);
+//setGroupList(prev=>[...prev, message.title])
                         break
                     default:
                         break;
@@ -129,33 +137,66 @@ const newToasts = messages.map((item, index) => {
     };
 console.log("LENGTH"+arrayOfGroups.data.length)
 console.log("GGROU{S"+arrayOfGroups.data)
-useEffect(()=> {
-    if( arrayOfGroups.data.length>0){
-        const message = {
-              title: arrayOfGroups.data[arrayOfGroups.data.length-1].title,
-            participants: arrayOfGroups.data[arrayOfGroups.data.length-1].participants,
-            id: Date.now(),
-            event: 'publicMessage',
-        };
-        console.log("PUBLIC"+JSON.stringify(message))
+
+
+
+const createGroup =(group)=> {
+    const message = {
+        title: group.title,
+        participants: group.participants,
+        id: Date.now(),
+        event: 'publicMessage',
+    };
+    socket.current.send(JSON.stringify(message));
+   /* try{
+
+        if( arrayOfGroups.data.length>0){
+            const message = {
+                title: arrayOfGroups.data[arrayOfGroups.data.length-1].title,
+                participants: arrayOfGroups.data[arrayOfGroups.data.length-1].participants,
+                id: Date.now(),
+                event: 'publicMessage',
+            };
+            console.log("PUBLIC"+JSON.stringify(message))
+            
+            
+        if(!id.includes("group")) {
         socket.current.send(JSON.stringify(message));
     }
+}
+} catch(err) {
+    console.log(err)
+} */
+}
+/*useEffect(()=> {
+    try{
 
-}, [arrayOfGroups])
+        if( arrayOfGroups.data.length>0){
+            const message = {
+                title: arrayOfGroups.data[arrayOfGroups.data.length-1].title,
+                participants: arrayOfGroups.data[arrayOfGroups.data.length-1].participants,
+                id: Date.now(),
+                event: 'publicMessage',
+            };
+            console.log("PUBLIC"+JSON.stringify(message))
+            
+            
+        if(!id.includes("group")) {
+        socket.current.send(JSON.stringify(message));
+    }
+}
+} catch(err) {
+    console.log(err)
+}
+
+}, [arrayOfGroups]) */
 
     
-useEffect(()=> {
-    console.log("==================================================================")
-console.log("MESS"+messages)
-}, [messages])
+
 
     return (
         <div style={{width: "100%", height: "100%", backgroundColor: "red"}}>
 
-    
-     
-     
-     
       {toasts}
       <div className="center" style={{position: "absolute", top:"400px", left: "1000px"}}> 
      
@@ -178,16 +219,18 @@ console.log("MESS"+messages)
   
 
                             </div>
-           <Panel userList={userList} groupList={groupList} />
-
-           {isVisibleTextPanel ? (
+           <Panel userList={userList} groupList={groupList} createGroup={createGroup} grouppList={grouppList} />
+        <TypeMessageComponent sendMessage={sendMessage} value={value} /> 
+     {/*      {isVisibleTextPanel ? (
             <>
             <TypeMessageComponent sendMessage={sendMessage} value={value} />
             
             </>
            ) : (
             <></>
-           )}
+           )} */}
+
+           <Group  createGroup={createGroup} />
         </div>
     );
 };

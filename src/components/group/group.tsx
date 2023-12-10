@@ -10,7 +10,7 @@ import Del from "../../asserts/del.png"
 
 import { setGroup, setVisibleGroup } from "../../store/reducers/ActionCreators.ts";
  
-const Group = () => {
+const Group = ({createGroup}) => {
      //const {} = useAppSe
     //trinsicElements.input: React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
     const [titleValue, setTitleValue] = useState(""); 
@@ -38,6 +38,7 @@ participants: participants
 if(typeof group.title==="string"){
 dispatch(setVisibleGroup())
     dispatch(setGroup(group))
+    createGroup(group)
 }
 } 
 

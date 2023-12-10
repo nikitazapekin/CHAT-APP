@@ -12,7 +12,8 @@ import GroupImage from "../../asserts/users.jpg"
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Group from "../group/group.tsx";
-const Panel = ({ userList, groupList }) => {
+const Panel = ({ userList, groupList, createGroup, grouppList }) => {
+    const [pr, setPr] =useState<any>([]);
     useEffect(()=> {
         console.log(":IST" +userList)
         for(let i=0; i<userList.length; i++){
@@ -20,9 +21,10 @@ const Panel = ({ userList, groupList }) => {
         }
      
     }, [userList])
+    console.log("GROUP LIST!!!!!!!!!!!"+groupList)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
-    const { isVisiblePanel } = useAppSelector(state => state.userReducer);
+    const { isVisiblePanel, arrayOfGroups } = useAppSelector(state => state.userReducer);
     const [visible, setVisible] = useState(false);
     const [visibleChats, setVisibleChats] = useState(false);
     const [visibleGroups, setVisibleGroups] = useState(false);
@@ -35,7 +37,6 @@ const Panel = ({ userList, groupList }) => {
         setVisibleChats(!visibleChats);
     };
     const handleClickGroup = ( ) => {
-       // setVisibleGroups(!visibleGroups);
        dispatch(setVisibleGroup())
 
     }
@@ -46,18 +47,27 @@ const Panel = ({ userList, groupList }) => {
     }
 useEffect(()=> {
     console.log("GROUP LUST"+groupList)
+    for(let i=0; i<groupList.length; i++){
+        setPr(prev=>[prev, groupList[i]])
+    }
+
+   
 }, [ groupList])
+useEffect(()=> {
+    console.log("PRRRrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr"+pr)
+}, [pr])
+console.log("ARRAY OF GROUPS"+JSON.stringify(arrayOfGroups))
     return (
         isVisiblePanel ? (
             <div className="panel">
                 <div className="btnsPanel">
                     <button className="btnPanel" onClick={handleClick}>Show Online</button>
-                    <button className="btnPanel"  onClick={handleClickChats}>Show Chats</button>
+                  <button className="btnPanel"  onClick={handleClickChats}>Show Chats</button>
                 
                <button className="btnPanel" onClick={handleClickGroup}>
                 Group
-               </button>
-                </div>
+        </button>  
+                </div> 
 
 
              
@@ -78,12 +88,16 @@ useEffect(()=> {
                     ))
                 )}
 
+ 
+
+
 
 {visibleChats && (
 
 
-               groupList.map(item => (
-                        <Link onClick={()=>handleSelect(item)} key={item} style={{ textDecoration: "none" }} to={`/group/${item}`}>
+            //   groupList.map(item => (
+            grouppList.map(item => (
+                        <Link onClick={()=>handleSelect(item)} key={item} style={{ textDecoration: "none" }} to={`/chats/group-${item}`}>
                             <div className="onlineUser" key={item}>
                                 <div className="onlineLine">
                                     <h3 className="onlineUserName">
@@ -98,13 +112,52 @@ useEffect(()=> {
               
                     ))
                 )}
+           
 
 
-            </div>
+
+
+
+
+
+
+
+{visibleChats && arrayOfGroups.data.length>0 && (
+
+
+//   groupList.map(item => (
+  arrayOfGroups.data.map(item => (
+            <Link onClick={()=>handleSelect(item.title)} key={item.title} style={{ textDecoration: "none" }} to={`/chats/group-${item.title}`}>
+                <div className="onlineUser" key={item.title}>
+                    <div className="onlineLine">
+                        <h3 className="onlineUserName">
+                            {item.title}
+                        </h3>
+                    </div>
+                    <img className="onlineUserLogo" src={GroupImage}
+                        alt="logo"
+                    />
+                </div>
+            </Link>
+  
+        ))
+    )}
+
           
+            </div>
         ) : (
             <></> 
         )
+
+
+
+
+
+
+
+
+
+        
     );
 };
 

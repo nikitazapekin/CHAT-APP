@@ -25,8 +25,8 @@ const AccountPage = ({socketInstance}: any) => {
 
 
 
-<WebSock  />
-<Group />
+<WebSock  /> 
+{/*<Group /> */}
  
 </div>
 
