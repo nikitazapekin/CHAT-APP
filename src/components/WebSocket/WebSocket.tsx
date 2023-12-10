@@ -271,9 +271,17 @@ type SocketMessage = {
   }
     socket.current.onmessage = (event) => {
       const message: SocketMessage = JSON.parse(event.data);
+
+
+      console.log("SOCKET MESSAGE" +JSON.stringify(message))
       switch (message.event) {
         case 'privateMessage':
-          setMessages((prev) => [...prev, message]);
+          console.log("PRIV" +JSON.stringify(message))
+        //  setMessages((prev) => [...prev, message]);
+        setMessages((prev)=>[message])
+         // setMessages((prev) => [...prev, message]);
+    //     setMessages(message || [])
+   // setMessages((prev) => [...prev, message || '']);
           break;
         case 'userList':
           setUserList(message.userList || []);
