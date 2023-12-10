@@ -1,7 +1,7 @@
 
 import React, { useEffect } from "react";
 import "./typeMessageComponent.scss";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useAppDispatch } from "../../hooks/redux.ts";
 import { typeMessage } from "../../store/reducers/ActionCreators.ts";
 import { useParams } from "react-router-dom";
@@ -11,6 +11,8 @@ import Plane from "../../asserts/plane.png"
 import { setVisibleEmojePanel } from "../../store/reducers/ActionCreators.ts";
 const TypeMessageComponent = ({ sendMessage, value }) => {
  // const TypeMessageComponent = ({  }) => {
+  const [val, setVal] =useState("")
+  const txt = useRef(null);
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const [vis, setVis]=useState(false)
@@ -20,6 +22,7 @@ const TypeMessageComponent = ({ sendMessage, value }) => {
   });
 const [smiley, setSmiley]=useState("");
 useEffect(()=> {
+  setVal(prev=>prev+smiley)
  setSendValue((prevData) => ({
     ...prevData,
     typedMessage: prevData.typedMessage + smiley,
@@ -32,14 +35,20 @@ useEffect(()=> {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
+    setVal(value)
+    if (txt.current) {
     setSendValue((prevData) => ({
       ...prevData,
       [name]: value,
+  //  [name]: txt.current.value 
     }));
+
+  }
   };
 
   const handleButtonClick = () => {
     sendMessage();
+    setVal("")
   };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -58,8 +67,10 @@ const handleOpacity =()=> {
       <img src={Sm} className="emojyImg"  alt="image" />
       </div>
       <input
-      defaultValue={""}
-      value={value}
+      ref={txt}
+     defaultValue={""}
+     value={val}
+  //    value={value}
         name="typedMessage"
         onChange={handleChange}
         onKeyPress={handleKeyPress}

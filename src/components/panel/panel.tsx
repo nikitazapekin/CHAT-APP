@@ -10,9 +10,11 @@ import { useAppDispatch } from "../../hooks/redux.ts";
 import { setCRecipient, setVisibleGroup, settUserList } from "../../store/reducers/ActionCreators.ts";
 import GroupImage from "../../asserts/users.jpg"
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Group from "../group/group.tsx";
 const Panel = ({ userList, groupList, createGroup, grouppList }) => {
+    const {id} =useParams()
     const [pr, setPr] =useState<any>([]);
     useEffect(()=> {
         console.log(":IST" +userList)
@@ -62,19 +64,22 @@ console.log("ARRAY OF GROUPS"+JSON.stringify(arrayOfGroups))
             <div className="panel">
                 <div className="btnsPanel">
                     <button className="btnPanel" onClick={handleClick}>Show Online</button>
-                  <button className="btnPanel"  onClick={handleClickChats}>Show Chats</button>
+               {/*   <button className="btnPanel"  onClick={handleClickChats}>Show Chats</button>
                 
-               <button className="btnPanel" onClick={handleClickGroup}>
+        <button className="btnPanel" onClick={handleClickGroup}> 
                 Group
-        </button>  
+        </button>  */}
                 </div> 
 
 
              
                 {visible && (
                  userList.map(item => (
+                    <>
+                    {item!=id ? (
+                        
                         <Link onClick={()=>handleSelect(item)} key={item} style={{ textDecoration: "none" }} to={`/chats/${item}`}>
-                            <div className="onlineUser" key={item}>
+                        <div className="onlineUser" key={item}>
                                 <div className="onlineLine">
                                     <h3 className="onlineUserName">
                                         {item}
@@ -85,6 +90,11 @@ console.log("ARRAY OF GROUPS"+JSON.stringify(arrayOfGroups))
                                 />
                             </div>
                         </Link>
+                        ) : (
+                            <>
+                            </>
+                        )}
+                        </>
                     ))
                 )}
 
