@@ -18,7 +18,10 @@ type ArrayOfMessages = {
  from: string,
  text: string
   }
-  
+  interface IGroup {
+    title: string,
+    participants: String[]
+  }
 interface UserState {
     users: IUser[];
     isLoading: boolean;
@@ -27,6 +30,7 @@ interface UserState {
     isVisibleTextPanel: boolean,
     isVisibleEmojePanel: boolean,
     message: string,
+    userList: String[],
     author: string ,
     currentUser: string,
     recipientSelected: string,
@@ -37,18 +41,15 @@ interface UserState {
             text: string,
             too: string
             }>
-/*data: Array<{
-    event: string,
-from: string,
-text: string
-  }>[]  */
-    }
- //  arrayOfMessages: ArrayOfMessages[]
-/*  arrayOfMessages: Array<{
-    event: string,
-from: string,
-text: string
-  }>[] */
+ 
+    },
+    arrayOfGroups: {
+data: Array<{
+    title: string,
+    participants: String[]
+}>
+    },
+ 
 }
 
 const initialState: UserState = {
@@ -62,8 +63,12 @@ const initialState: UserState = {
     message: "",
     author: "",
     currentUser: "",
+    userList: [],
     recipientSelected: "",
     arrayOfMessages: {
+        data: []
+    },
+    arrayOfGroups: {
         data: []
     }
 }
@@ -92,6 +97,22 @@ export const userSlice = createSlice({
             state.author=action.payload.author;
             console.log("AUTH"+state.author+":"+state.message)
         },
+clearUserList: (state) => {
+state.userList= []
+},
+      settUserList: (state, action: PayloadAction<string>)=>{
+        state.userList.push(action.payload);
+                    }, 
+setGroup: (state, action: PayloadAction<IGroup>)=> {
+console.log("THIS IS GROUP" +JSON.stringify(action.payload))
+
+state.arrayOfGroups.data.push(action.payload)
+for(let i=0; i<state.arrayOfGroups.data.length; i++){
+console.log("ELL"+JSON.stringify(state.arrayOfGroups.data[i]))
+}
+},
+
+
         setCurrentUsername: (state, action: PayloadAction<string>)=>{
 state.currentUser =action.payload
         },
@@ -111,7 +132,7 @@ console.log("CIRRENT RECIPIENT"+state.recipientSelected)
             const { event, from, text, too } = action.payload;
       
     const el = {event, from,  text, too}
-    
+
    state.arrayOfMessages.data.push(el)
  
             console.log("THIS IS AN ARRAY" +JSON.stringify(state.arrayOfMessages))

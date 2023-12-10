@@ -7,6 +7,7 @@ import { typeMessage } from "../../store/reducers/ActionCreators.ts";
 import { useParams } from "react-router-dom";
 import SmileyBox from "../smileyBox/smileyBox.tsx";
 import  Sm  from "../../asserts/sm.png"
+import Plane from "../../asserts/plane.png"
 import { setVisibleEmojePanel } from "../../store/reducers/ActionCreators.ts";
 const TypeMessageComponent = ({ sendMessage, value }) => {
   const { id } = useParams();
@@ -64,9 +65,12 @@ const handleOpacity =()=> {
         className="typeMessageInput"
         placeholder="Message..."
       />
-      <button className="sendTypedMessage" onClick={handleButtonClick}>
+
+
+      <img onClick={handleButtonClick} className="ssendTypedMsg" src={Plane} alt="senf" />
+     {/* <button className="sendTypedMessage" onClick={handleButtonClick}>
         Send
-      </button>
+  </button> */}
     </div>
     {vis ? (
 

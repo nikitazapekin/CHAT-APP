@@ -7,20 +7,38 @@ import "./panel.scss";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../hooks/redux.ts";
 import { useAppDispatch } from "../../hooks/redux.ts";
-import { setCRecipient } from "../../store/reducers/ActionCreators.ts";
+import { setCRecipient, settUserList } from "../../store/reducers/ActionCreators.ts";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Group from "../group/group.tsx";
 const Panel = ({ userList }) => {
+    useEffect(()=> {
+        console.log(":IST" +userList)
+        for(let i=0; i<userList.length; i++){
+            dispatch(settUserList(userList[i]))
+        }
+     
+    }, [userList])
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const { isVisiblePanel } = useAppSelector(state => state.userReducer);
     const [visible, setVisible] = useState(false);
-
+    const [visibleChats, setVisibleChats] = useState(false);
+    const [visibleGroups, setVisibleGroups] = useState(false);
     const handleClick = ( ) => {
-        // Toggle visibility state
+        
         setVisible(!visible);
     };
+    const handleClickChats = ( ) => {
+        
+        setVisibleChats(!visibleChats);
+    };
+    const handleClickGroup = ( ) => {
+        setVisibleGroups(!visibleGroups);
+
+    }
     const handleSelect = (param: string)=> {
-        console.log("seleeeect"+param)
+        
         dispatch(setCRecipient(param))
         navigate(`/chats/${param}`)
     }
@@ -30,8 +48,15 @@ const Panel = ({ userList }) => {
             <div className="panel">
                 <div className="btnsPanel">
                     <button className="btnPanel" onClick={handleClick}>Show Online</button>
-                    <button className="btnPanel">Show Chats</button>
+                    <button className="btnPanel"  onClick={handleClickChats}>Show Chats</button>
+                
+               <button className="btnPanel" onClick={handleClickGroup}>
+                Group
+               </button>
                 </div>
+
+
+             
                 {visible && (
                     userList.map(item => (
                         <Link onClick={()=>handleSelect(item)} key={item} style={{ textDecoration: "none" }} to={`/chats/${item}`}>
@@ -48,7 +73,31 @@ const Panel = ({ userList }) => {
                         </Link>
                     ))
                 )}
+
+
+{visibleChats && (
+
+
+                    userList.map(item => (
+                        <Link onClick={()=>handleSelect(item)} key={item} style={{ textDecoration: "none" }} to={`/chats/${item}`}>
+                            <div className="onlineUser" key={item}>
+                                <div className="onlineLine">
+                                    <h3 className="onlineUserName">
+                                        {item}
+                                    </h3>
+                                </div>
+                                <img className="onlineUserLogo" src="https://cdn-icons-png.flaticon.com/512/219/219983.png"
+                                    alt="logo"
+                                />
+                            </div>
+                        </Link>
+              
+                    ))
+                )}
+
+
             </div>
+          
         ) : (
             <></> 
         )

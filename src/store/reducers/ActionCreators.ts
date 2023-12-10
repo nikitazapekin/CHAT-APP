@@ -48,6 +48,18 @@ export const addMessage = (event: string, from: string, text: string, to: string
 };
 
 
+interface IGroup {
+  title: string | any | null,
+  participants: String[]
+}
+export const setGroup = (visibility: IGroup) => (dispatch: AppDispatch) => {
+ 
+    dispatch(userSlice.actions.setGroup(visibility));
+  
+};
+
+
+
 
 
 export const setVisibleTextPanel = (visibility: boolean) => (dispatch: AppDispatch) => {
@@ -61,6 +73,24 @@ export const setVisibleTextPanel = (visibility: boolean) => (dispatch: AppDispat
 export const setVisibleEmojePanel = (visibility: boolean) => (dispatch: AppDispatch) => {
     //  const privateMessage = {event: event, from: from, text:text, too: to}
       dispatch(userSlice.actions.setVisibleEmojePanel(visibility));
+     // dispatch(userSlice.actions.setRecipient(name));
+  };
+
+
+
+  export const settUserList = (visibility:string) => (dispatch: AppDispatch) => {
+    //  const privateMessage = {event: event, from: from, text:text, too: to}
+      dispatch(userSlice.actions.settUserList(visibility));
+     // dispatch(userSlice.actions.setRecipient(name));
+  };
+
+
+
+  
+
+  export const clearUserList = () => (dispatch: AppDispatch) => {
+    //  const privateMessage = {event: event, from: from, text:text, too: to}
+      dispatch(userSlice.actions.clearUserList( ));
      // dispatch(userSlice.actions.setRecipient(name));
   };
 /*

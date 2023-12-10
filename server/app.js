@@ -159,14 +159,7 @@ for (const [clientId, clientSocket] of clients) {
   console.log(`Client ID: ${clientId}`);
   // Perform actions with clientSocket if needed
 }
-/*if (clients.has("test")) {
-  const targetClient = clients.get("test");
-  targetClient.send(JSON.stringify({
-      event: 'privateMessage',
-      from,
-      text,
-  }));
-} */
+ 
     if (clients.has(to)) {
       console.log("user is found:"+to)
         const targetClient = clients.get(to);
@@ -179,6 +172,7 @@ console.log("username"+ username)
           event: 'privateMessage',
           from,
           text,
+          too: to
         })); 
   //    }
     } 
@@ -188,12 +182,14 @@ function broadcastUserList() {
     const userList = Array.from(clients.keys());
     const userListMessage = JSON.stringify({
         event: 'userList',
-        userList,
+        userList: userList,
     });
 
-    // Broadcast the updated user list to all connected clients
+    
     clients.forEach(client => {
       console.log("CLIENT:"+ JSON.stringify(client.message), "message:"+userListMessage)
-        client.send(userListMessage);
+    console.log("USERS" +userList)
+       client.send(userListMessage);
+   //    client.send(userList)
     });
 }

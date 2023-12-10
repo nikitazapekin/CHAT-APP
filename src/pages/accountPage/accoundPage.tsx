@@ -6,6 +6,7 @@ import { setCurrentUsername } from "../../store/reducers/ActionCreators.ts";
 import { useParams } from "react-router-dom";
 import { useState, useEffect  } from "react";
 import { useAppDispatch } from "../../hooks/redux.ts";
+import Group from "../../components/group/group.tsx";
 const AccountPage = ({socketInstance}: any) => {
     const {id}= useParams()
     console.log("ACCOUNT PAGE"+id)
@@ -16,18 +17,18 @@ const AccountPage = ({socketInstance}: any) => {
             dispatch(setCurrentUsername(id));
 
         }
-    //dispatch(switchVisibilityOfPanel)
+    
       }, [])
     return ( 
-<>
+<div >
 <Navigation />
 
 
 
 <WebSock  />
-
+<Group />
  
-</>
+</div>
 
      );
 }

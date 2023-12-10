@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import "./toast.scss"
-
+import Tel from "../../asserts/close.png"
+import Logo from "../../asserts/logo.png"
 const Toast = ({text, from}) => {
   const [prog, setProg] =useState(100)
   const [vis, setVis] =useState(true)
@@ -25,11 +26,11 @@ useEffect(()=> {
                 <div className="toastBox">
         <h1 className="h1-toast">{from}</h1>
         <h3 className="h3-toast">{text}</h3>
-    {/*    <img src={Logo} className="toast-logoOfUser"  alt="logo" />
+        <img src={Logo} className="toast-logoOfUser"  alt="logo" />
         <img
         onClick={handleClick}
          src={Tel} alt="close" className="close-btn" />
-        */}
+        
         <progress
         className="progress-bar"
         max="100"
