@@ -1,7 +1,5 @@
-import {IUser} from "../../models/IUser";
+
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {fetchUsers} from "./ActionCreators";
- 
 type ArrayOfMessages = {
     event: string;
     from: string;
@@ -18,7 +16,7 @@ type ArrayOfMessages = {
     participants: String[]
   }
 interface UserState {
-    users: IUser[];
+   
     isLoading: boolean;
     error: string;
     isVisiblePanel: boolean,
@@ -31,7 +29,7 @@ interface UserState {
     currentUser: string,
     recipientSelected: string,
     arrayOfMessages: {
-        data: Array<{//event: string,
+        data: Array<{
             event: string,
             from: string,
             text: string,
@@ -49,13 +47,11 @@ data: Array<{
 }
 
 const initialState: UserState = {
-    users: [],
     isLoading: false,
     error: '',
     isVisiblePanel: true,
     isVisibleGroup: false,
     isVisibleEmojePanel: false,
- //   isVisibleTextPanel: false,
  isVisibleTextPanel: true,
     message: "",
     author: "",
@@ -77,11 +73,6 @@ export const userSlice = createSlice({
         usersFetching: (state) => {
             state.isLoading = false;
         },
-        usersFetchingSuccess: (state, action: PayloadAction<IUser[]>) => {
-            state.isLoading = false;
-            state.error = '';
-            state.users = action.payload;
-        },
         usersFetchingError: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
             state.error = action.payload;
@@ -92,7 +83,6 @@ export const userSlice = createSlice({
         typeMessage: (state, action: PayloadAction<{message: string, author:string}> ) => {
             state.message = action.payload.message;
             state.author=action.payload.author;
-            console.log("AUTH"+state.author+":"+state.message)
         },
 clearUserList: (state) => {
 state.userList= []
@@ -101,15 +91,8 @@ state.userList= []
         state.userList.push(action.payload);
                     }, 
 setGroup: (state, action: PayloadAction<IGroup>)=> {
-console.log("THIS IS GROUP" +JSON.stringify(action.payload))
-
 state.arrayOfGroups.data.push(action.payload)
-for(let i=0; i<state.arrayOfGroups.data.length; i++){
-console.log("ELL"+JSON.stringify(state.arrayOfGroups.data[i]))
-}
 },
-
-
         setCurrentUsername: (state, action: PayloadAction<string>)=>{
 state.currentUser =action.payload
         },
@@ -120,22 +103,14 @@ state.isVisibleTextPanel =action.payload
         setVisibleEmojePanel: (state, action: PayloadAction<boolean>)=> {
             state.isVisibleEmojePanel =action.payload
                     },
-
-
-
-
-                  //  setVisibleGroup: (state, action: PayloadAction<boolean>)=> {
                     setVisibleGroup: (state )=> {
-                     //   state.isVisibleGroup =action.payload
-
-                     state.isVisibleGroup =     !state.isVisibleGroup
+                     state.isVisibleGroup = !state.isVisibleGroup
                                 },
             
 
 
         setRecipient: (state, action: PayloadAction<string>)=>{ 
 state.recipientSelected=action.payload
-console.log("CIRRENT RECIPIENT"+state.recipientSelected)
         },
         addMessage: (state, action: PayloadAction<ArrayOfMessages>) => {
             const { event, from, text, too } = action.payload;
@@ -144,7 +119,6 @@ console.log("CIRRENT RECIPIENT"+state.recipientSelected)
 
    state.arrayOfMessages.data.push(el)
  
-            console.log("THIS IS AN ARRAY" +JSON.stringify(state.arrayOfMessages))
          
           },
 

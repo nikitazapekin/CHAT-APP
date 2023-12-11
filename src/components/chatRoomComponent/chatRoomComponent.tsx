@@ -18,19 +18,11 @@ interface MessageType {
 }
 const ChatRoomComponent = () => {
     const {arrayOfMessages, currentUser}= useAppSelector(state=>state.userReducer)
-    console.log("arrau of messages"+ JSON.stringify(arrayOfMessages))
+    
 
-useEffect(()=> {
-    for (let i=0; i<arrayOfMessages.data.length; i++){
 
-        console.log(arrayOfMessages.data[i], arrayOfMessages.data[i].from, arrayOfMessages.data[i].too )
-    }
-})
     const [arrOfMsg, setArrOfMsg] =useState<MessageType[]>([]);
     const {id} =useParams()
-    console.log("IDDD"+id)
-
-    
     return ( 
         <div className="chatRoomComponent">
  
@@ -49,8 +41,6 @@ useEffect(()=> {
     </>
                                         ) : (
                                             <>
-
-  
 
                                             </>
                                         )
@@ -84,5 +74,3 @@ useEffect(()=> {
  
 export default ChatRoomComponent;
 
-
-//{item.from!=id && item.from == currentUser && item.too == id ? (

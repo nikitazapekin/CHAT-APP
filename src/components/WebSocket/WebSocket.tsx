@@ -226,7 +226,6 @@ type SocketMessage = {
   );
 
   const { id } = useParams<{ id: string }>();
-
   const socket = useRef<WebSocket | null>(null);
   const [messages, setMessages] = useState<any>([]);
   const [value, setValue] = useState('');
@@ -241,21 +240,12 @@ type SocketMessage = {
   useEffect(() => {
     setUsername(currentUser);
   }, [currentUser]);
-
-  useEffect(() => {
-    // dispatch(settUserList(userList[userList.length - 1]));
-  }, [userList]);
-
-  useEffect(() => {}, [userList]);
-
   useEffect(() => {
     setValue(message);
   }, [message]);
-
   function connect() {
     socket.current = new WebSocket('ws://localhost:5000');
     if(id!=undefined){
-
       if (!id.includes('group')) {
         socket.current.onopen = () => {
         let name = id;
@@ -271,17 +261,9 @@ type SocketMessage = {
   }
     socket.current.onmessage = (event) => {
       const message: SocketMessage = JSON.parse(event.data);
-
-
-      console.log("SOCKET MESSAGE" +JSON.stringify(message))
       switch (message.event) {
         case 'privateMessage':
-          console.log("PRIV" +JSON.stringify(message))
-        //  setMessages((prev) => [...prev, message]);
         setMessages((prev)=>[message])
-         // setMessages((prev) => [...prev, message]);
-    //     setMessages(message || [])
-   // setMessages((prev) => [...prev, message || '']);
           break;
         case 'userList':
           setUserList(message.userList || []);
@@ -307,7 +289,7 @@ type SocketMessage = {
     messages.forEach((item, index) => {
       dispatch(addMessage(messages[index].event, messages[index].from, messages[index].text || '', currentUser));
       const newToasts = messages.map((item, index) => (
-        <Toast text={item.text || ''} from={item.from || ''} key={index}  /> //message={item || ''}
+        <Toast text={item.text || ''} from={item.from || ''} key={index}  /> 
       ));
       setToasts(newToasts);
     });

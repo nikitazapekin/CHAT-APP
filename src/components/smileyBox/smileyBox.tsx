@@ -106,7 +106,6 @@ const SmileyBox = ({ setSmiley}) => {
 setSelected(obj[param])
     }
     const  handleClickEmoje =(param)=> {
-   //    setSmiley(prev=>prev+param)
    setSmiley(param)
     }
     return (
@@ -120,13 +119,10 @@ setSelected(obj[param])
 
     </div>
     <div className="smileySelection">
-
 <div className="smileySelectionWrapper">
-
     <div onClick={()=>handleClick("🤩")} className="smileySelectionItem">
 🤩   
 </div>
-
 <div onClick={()=>handleClick("🙋‍♀️")} className="smileySelectionItem">
 🙋‍♀️
 </div>
@@ -136,45 +132,19 @@ setSelected(obj[param])
 <div onClick={()=>handleClick("🐱")} className="smileySelectionItem">
 🐱   
 </div>
-
-
 <div onClick={()=>handleClick("🏧")} className="smileySelectionItem">
 🏧  
 </div>
-
-
-
-
-
 <div  onClick={()=>handleClick("🏖️")}className="smileySelectionItem">
 🏖️   
 </div>
-
-
-
-
-
-
-
 <div onClick={()=>handleClick("🎉")} className="smileySelectionItem">
 🎉  
 </div>
-
-
 <div onClick={()=>handleClick("🍔")} className="smileySelectionItem">
 🍔   
 </div>
-
 </div>
-
-
-
-
-
-
-
-
-
     </div>
     </div>
     );

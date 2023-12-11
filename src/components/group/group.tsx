@@ -11,8 +11,6 @@ import Del from "../../asserts/del.png"
 import { setGroup, setVisibleGroup } from "../../store/reducers/ActionCreators.ts";
  
 const Group = ({createGroup}) => {
-     //const {} = useAppSe
-    //trinsicElements.input: React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
     const [titleValue, setTitleValue] = useState(""); 
     const { userList, isVisibleGroup } = useAppSelector((state) => state.userReducer);
     const [participants, setParticipants] = useState<any>([]);

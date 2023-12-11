@@ -17,13 +17,10 @@ const Panel = ({ userList, groupList, createGroup, grouppList }) => {
     const {id} =useParams()
     const [pr, setPr] =useState<any>([]);
     useEffect(()=> {
-        console.log(":IST" +userList)
         for(let i=0; i<userList.length; i++){
             dispatch(settUserList(userList[i]))
         }
-     
     }, [userList])
-    console.log("GROUP LIST!!!!!!!!!!!"+groupList)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const { isVisiblePanel, arrayOfGroups } = useAppSelector(state => state.userReducer);
@@ -48,31 +45,16 @@ const Panel = ({ userList, groupList, createGroup, grouppList }) => {
         navigate(`/chats/${param}`)
     }
 useEffect(()=> {
-    console.log("GROUP LUST"+groupList)
     for(let i=0; i<groupList.length; i++){
         setPr(prev=>[prev, groupList[i]])
     }
-
-   
 }, [ groupList])
-useEffect(()=> {
-    console.log("PRRRrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr"+pr)
-}, [pr])
-console.log("ARRAY OF GROUPS"+JSON.stringify(arrayOfGroups))
     return (
         isVisiblePanel ? (
             <div className="panel">
                 <div className="btnsPanel">
                     <button className="btnPanel" onClick={handleClick}>Show Online</button>
-               {/*   <button className="btnPanel"  onClick={handleClickChats}>Show Chats</button>
-                
-        <button className="btnPanel" onClick={handleClickGroup}> 
-                Group
-        </button>  */}
                 </div> 
-
-
-             
                 {visible && (
                  userList.map(item => (
                     <>
@@ -103,9 +85,6 @@ console.log("ARRAY OF GROUPS"+JSON.stringify(arrayOfGroups))
 
 
 {visibleChats && (
-
-
-            //   groupList.map(item => (
             grouppList.map(item => (
                         <Link onClick={()=>handleSelect(item)} key={item} style={{ textDecoration: "none" }} to={`/chats/group-${item}`}>
                             <div className="onlineUser" key={item}>
@@ -122,20 +101,7 @@ console.log("ARRAY OF GROUPS"+JSON.stringify(arrayOfGroups))
               
                     ))
                 )}
-           
-
-
-
-
-
-
-
-
-
 {visibleChats && arrayOfGroups.data.length>0 && (
-
-
-//   groupList.map(item => (
   arrayOfGroups.data.map(item => (
             <Link onClick={()=>handleSelect(item.title)} key={item.title} style={{ textDecoration: "none" }} to={`/chats/group-${item.title}`}>
                 <div className="onlineUser" key={item.title}>
@@ -158,16 +124,7 @@ console.log("ARRAY OF GROUPS"+JSON.stringify(arrayOfGroups))
         ) : (
             <></> 
         )
-
-
-
-
-
-
-
-
-
-        
+   
     );
 };
 

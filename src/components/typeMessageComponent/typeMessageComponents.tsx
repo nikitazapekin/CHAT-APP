@@ -10,7 +10,6 @@ import  Sm  from "../../asserts/sm.png"
 import Plane from "../../asserts/plane.png"
 import { setVisibleEmojePanel } from "../../store/reducers/ActionCreators.ts";
 const TypeMessageComponent = ({ sendMessage, value }) => {
- // const TypeMessageComponent = ({  }) => {
   const [val, setVal] =useState("")
   const txt = useRef(null);
   const { id } = useParams();
@@ -26,7 +25,6 @@ useEffect(()=> {
  setSendValue((prevData) => ({
     ...prevData,
     typedMessage: prevData.typedMessage + smiley,
-   // ["typedMessage"]: ...smiley,
   })); 
 }, [smiley])
   useEffect(() => {
@@ -40,12 +38,10 @@ useEffect(()=> {
     setSendValue((prevData) => ({
       ...prevData,
       [name]: value,
-  //  [name]: txt.current.value 
     }));
 
   }
   };
-
   const handleButtonClick = () => {
     sendMessage();
     setVal("")
@@ -58,7 +54,6 @@ useEffect(()=> {
   };
 const handleOpacity =()=> {
   setVis(prev => !prev)
- // dispatch(setVisibleEmojePanel())
 }
   return (
   <>
@@ -70,19 +65,15 @@ const handleOpacity =()=> {
       ref={txt}
      defaultValue={""}
      value={val}
-  //    value={value}
         name="typedMessage"
         onChange={handleChange}
         onKeyPress={handleKeyPress}
         className="typeMessageInput"
         placeholder="Message..."
       />
-
-
       <img onClick={handleButtonClick} className="ssendTypedMsg" src={Plane} alt="senf" />
     </div>
     {vis ? (
-
       <SmileyBox  setSmiley={setSmiley} />
     ) :  (
       <></>
